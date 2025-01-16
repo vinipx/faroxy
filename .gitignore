@@ -1,0 +1,21 @@
+# Project-specific files
+*.log
+*.tmp
+
+# IDE-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Dependency directories
+node_modules/
+venv/
+
+# Build outputs
+dist/
+build/
