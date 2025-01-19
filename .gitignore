@@ -67,5 +67,8 @@ reports/
 *.debug
 
 # Local configuration
+/config/
+/config/application-local.properties
+*.local.properties
 application-local.properties
 application-local.yml

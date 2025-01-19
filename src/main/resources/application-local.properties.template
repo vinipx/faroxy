@@ -1,0 +1,18 @@
+# Local Server configuration
+server.port=${FAROXY_SERVER_PORT:9090}
+
+# Local Proxy configuration
+faroxy.proxy.port=${FAROXY_PROXY_PORT:9999}
+
+# Local H2 Database configuration
+spring.datasource.url=jdbc:h2:mem:localdb
+spring.datasource.username=sa
+spring.datasource.password=
+
+# Local logging configuration
+logging.level.org.springframework.web=INFO
+logging.level.io.faroxy=DEBUG
+
+# Enable H2 Console for local development
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console

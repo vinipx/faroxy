@@ -1,5 +1,6 @@
 package io.faroxy.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,8 +22,13 @@ public class ResponseLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer statusCode;
+    
+    @Column(columnDefinition = "TEXT")
     private String headers;
+    
+    @Column(columnDefinition = "TEXT")
     private String body;
+    
     private LocalDateTime timestamp;
     private Long requestId;
 }
