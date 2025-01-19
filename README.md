@@ -1,6 +1,26 @@
 # Faroxy
 
+[![GitHub Release](https://img.shields.io/github/v/release/vinipx/faroxy?include_prereleases&style=flat-square)](https://github.com/vinipx/faroxy/releases)
+[![License](https://img.shields.io/github/license/vinipx/faroxy?style=flat-square)](LICENSE)
+[![GitHub Issues](https://img.shields.io/github/issues/vinipx/faroxy?style=flat-square)](https://github.com/vinipx/faroxy/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/vinipx/faroxy?style=flat-square)](https://github.com/vinipx/faroxy/pulls)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/vinipx/faroxy/gradle.yml?branch=main&style=flat-square)](https://github.com/vinipx/faroxy/actions)
+[![Last Commit](https://img.shields.io/github/last-commit/vinipx/faroxy?style=flat-square)](https://github.com/vinipx/faroxy/commits/main)
+
+<div align="center">
+
+![Faroxy Logo](docs/images/logo.png)
+
 The Faroxy is a Spring Boot application that functions as an HTTP web proxy server with request/response logging capabilities and a web interface for monitoring traffic.
+
+[Getting Started](#quick-start) •
+[Documentation](#documentation) •
+[Features](#features) •
+[Contributing](#contributing)
+
+</div>
+
+---
 
 ## Features
 
@@ -11,6 +31,14 @@ The Faroxy is a Spring Boot application that functions as an HTTP web proxy serv
 - RESTful APIs to retrieve logged requests and responses
 - Cross-platform support (macOS and Windows)
 - Docker support for easy deployment
+
+## Tech Stack
+
+[![Java](https://img.shields.io/badge/Java-17-orange?style=flat-square&logo=java)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.1-brightgreen?style=flat-square&logo=spring)](https://spring.io/projects/spring-boot)
+[![Gradle](https://img.shields.io/badge/Gradle-8.4-blue?style=flat-square&logo=gradle)](https://gradle.org/)
+[![H2](https://img.shields.io/badge/H2-Database-darkblue?style=flat-square&logo=h2)](https://www.h2database.com/)
+[![Docker](https://img.shields.io/badge/Docker-Support-blue?style=flat-square&logo=docker)](https://www.docker.com/)
 
 ## Prerequisites
 
@@ -190,6 +218,18 @@ Contributions are welcome! Please:
 2. Create a feature branch
 3. Submit a pull request
 
+## Stats
+
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=vinipx&show_icons=true&theme=radical)
+
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+
+Made with ❤️ by [vinipx](https://github.com/vinipx)
+
+</div>
