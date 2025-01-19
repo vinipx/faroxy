@@ -16,7 +16,56 @@ Thumbs.db
 node_modules/
 venv/
 
-# Build outputs
-dist/
+# Gradle
+.gradle/
 build/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# IntelliJ IDEA
+*.iws
+*.iml
+*.ipr
+out/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.logs
+*.log
+
+# Build and Runtime
 target/
+dist/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+
+# Test Reports
+test-output/
+reports/
+
+# Compiled files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Debug files
+*.debug
+
+# Local configuration
+application-local.properties
+application-local.yml
