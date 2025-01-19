@@ -1,55 +1,38 @@
 # Running Faroxy
 
-Faroxy provides multiple ways to run and manage the application. This guide covers all the available options and best practices.
+## Quick Setup
 
-## Using the Control Script
+Faroxy provides a setup script that handles all the necessary configuration:
 
-Faroxy comes with a convenient shell script (`scripts/faroxy.sh`) that makes it easy to manage the application.
-
-### Basic Usage
-
-1. Make the script executable (one-time setup):
+1. Clone the repository:
    ```bash
-   chmod +x scripts/faroxy.sh
+   git clone https://github.com/vinipx/faroxy.git
+   cd faroxy
    ```
 
-2. Available commands:
+2. Run the setup script:
    ```bash
-   ./scripts/faroxy.sh start    # Start the Faroxy server
-   ./scripts/faroxy.sh stop     # Stop the server
-   ./scripts/faroxy.sh restart  # Restart the server
-   ./scripts/faroxy.sh status   # Check server status
-   ./scripts/faroxy.sh help     # Show help message
+   ./scripts/setup.sh
    ```
 
-### Setting up an Alias
+   The setup script will:
+   - Make the control script executable
+   - Add the `faroxy` command to your shell (zsh and bash supported)
+   - Configure necessary permissions
+   - Provide clear instructions for next steps
 
-For easier access, you can set up an alias in your shell configuration:
-
-1. Add the alias to your shell configuration file (`.bashrc` or `.zshrc`):
+3. Activate the alias (as instructed by the setup script):
    ```bash
-   echo 'alias faroxy="$HOME/path/to/faroxy/scripts/faroxy.sh"' >> ~/.zshrc
+   source ~/.zshrc   # if using zsh
+   source ~/.bashrc  # if using bash
    ```
 
-2. Reload your shell configuration:
+4. Start using Faroxy:
    ```bash
-   source ~/.zshrc
+   faroxy start    # Start the server
+   faroxy status   # Check server status
+   faroxy help     # Show all commands
    ```
-
-3. Now you can use the `faroxy` command from anywhere:
-   ```bash
-   faroxy start
-   faroxy status
-   ```
-
-### Script Features
-
-The control script provides several helpful features:
-
-- **Port Checking**: Automatically checks if port 8080 is available
-- **Process Management**: Safely starts and stops the application
-- **Status Monitoring**: Shows if the application is running and its PID
-- **Clean Restart**: Ensures proper shutdown before starting
 
 ## Manual Running
 
