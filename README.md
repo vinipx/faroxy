@@ -1,4 +1,12 @@
-# Faroxy
+<p align="center">
+  <img src="docs/assets/images/faroxy-logo.png" alt="Faroxy Logo" width="200"/>
+</p>
+
+<h1 align="center">Faroxy</h1>
+
+<p align="center">
+  A modern HTTP proxy server with real-time traffic monitoring and analysis capabilities
+</p>
 
 [![GitHub Release](https://img.shields.io/github/v/release/vinipx/faroxy?include_prereleases&style=flat-square)](https://github.com/vinipx/faroxy/releases)
 [![License](https://img.shields.io/github/license/vinipx/faroxy?style=flat-square)](LICENSE)
