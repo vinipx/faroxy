@@ -1,14 +1,13 @@
 # Faroxy
 
-The Faroxy is a Spring Boot application that functions as an HTTP web proxy server with request/response logging capabilities. It provides both a web interface and a JavaFX-based UI for monitoring traffic.
+The Faroxy is a Spring Boot application that functions as an HTTP web proxy server with request/response logging capabilities and a web interface for monitoring traffic.
 
 ## Features
 
 - Forward HTTP requests and responses (GET, POST, and other methods)
 - Support for form data and custom headers
 - Store intercepted requests and responses in H2 in-memory database
-- Web interface for viewing proxy traffic
-- JavaFX-based UI for real-time traffic monitoring
+- Web interface for viewing proxy traffic in real-time
 - RESTful APIs to retrieve logged requests and responses
 - Cross-platform support (macOS and Windows)
 - Docker support for easy deployment
@@ -183,10 +182,6 @@ Access the H2 database console at `http://localhost:8080/h2-console`:
    - Ensure H2 console is accessible at `http://localhost:8080/h2-console`
    - Check application logs for database-related errors
    - Try clearing the in-memory database by restarting the application
-
-3. **JavaFX UI Issues**
-   - Ensure Java 17 or higher is installed
-   - For headless environments, use the web interface instead
 
 ## Contributing
 

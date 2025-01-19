@@ -3,7 +3,6 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.4'
     id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 group = 'io.faroxy'
@@ -23,15 +22,6 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    javaFxVersion = "17"
-}
-
-javafx {
-    version = "${javaFxVersion}"
-    modules = ['javafx.controls', 'javafx.fxml', 'javafx.graphics']
-}
-
 dependencies {
     implementation 'org.slf4j:slf4j-api'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -41,10 +31,6 @@ dependencies {
     implementation 'org.controlsfx:controlsfx:11.1.2'
     implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'
     implementation 'jakarta.ws.rs:jakarta.ws.rs-api:3.1.0'
-    implementation "org.openjfx:javafx-base:${javaFxVersion}:mac-aarch64"
-    implementation "org.openjfx:javafx-controls:${javaFxVersion}:mac-aarch64"
-    implementation "org.openjfx:javafx-graphics:${javaFxVersion}:mac-aarch64"
-    implementation "org.openjfx:javafx-fxml:${javaFxVersion}:mac-aarch64"
     runtimeOnly 'com.h2database:h2'
     
     compileOnly 'org.projectlombok:lombok:1.18.30'
@@ -76,9 +62,6 @@ run {
         '--add-opens=java.base/java.nio=ALL-UNNAMED',
         '--add-opens=java.base/sun.nio.ch=ALL-UNNAMED',
         '--add-opens=java.base/java.io=ALL-UNNAMED',
-        '--add-modules=javafx.controls,javafx.fxml,javafx.graphics',
-        '--add-exports=javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED',
-        '--add-exports=javafx.graphics/com.sun.glass.ui=ALL-UNNAMED',
         '--module-path=${project.classpath}'
     ]
 }
