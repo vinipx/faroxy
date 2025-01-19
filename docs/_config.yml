@@ -1,0 +1,23 @@
+title: Faroxy Documentation
+description: Documentation for the Faroxy HTTP Proxy Server
+baseurl: "/faroxy"
+url: "https://vinipx.github.io"
+repository: vinipx/faroxy
+
+# Theme settings
+remote_theme: just-the-docs/just-the-docs
+color_scheme: dark
+
+# Aux links for the upper right navigation
+aux_links:
+  "Faroxy on GitHub":
+    - "https://github.com/vinipx/faroxy"
+
+# Footer content
+footer_content: "Copyright &copy; 2025 vinipx. Distributed under an MIT license."
+
+# Enable or disable the site search
+search_enabled: true
+
+# Heading anchor links
+heading_anchors: true
