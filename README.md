@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/vinipx/faroxy/main/docs/assets/images/faroxy-logo.png" alt="Faroxy Logo" width="200"/>
+  <img src="https://raw.githubusercontent.com/vinipx/faroxy/main/docs/images/logo.png" alt="Faroxy Logo" width="200"/>
 </p>
 
 <h1 align="center">Faroxy</h1>

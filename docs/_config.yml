@@ -8,7 +8,7 @@ repository: vinipx/faroxy
 remote_theme: just-the-docs/just-the-docs
 color_scheme: dark
 
-logo: "/assets/images/faroxy-logo.png"
+logo: "/images/logo.png"
 favicon_ico: "/assets/images/favicon.ico"
 
 # Aux links for the upper right navigation
