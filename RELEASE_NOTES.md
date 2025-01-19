@@ -1,4 +1,4 @@
-# Faroxy v1.0.0 Release Notes
+# Faroxy v1.1.0 Release Notes
 
 We're excited to announce the first release of Faroxy, a modern HTTP proxy server with real-time traffic monitoring and analysis capabilities!
 
@@ -65,13 +65,13 @@ We're excited to announce the first release of Faroxy, a modern HTTP proxy serve
 ### Gradle
 ```gradle
 dependencies {
-    implementation 'io.faroxy:faroxy:1.0.0'
+    implementation 'io.faroxy:faroxy:1.1.0'
 }
 ```
 
 ### Docker
 ```bash
-docker pull ghcr.io/vinipx/faroxy:1.0.0
+docker pull ghcr.io/vinipx/faroxy:1.1.0
 ```
 
 ## 🌟 Getting Started
@@ -120,3 +120,26 @@ Special thanks to all contributors who helped make this release possible!
 ---
 
 For more information, visit our [GitHub repository](https://github.com/vinipx/faroxy) or [documentation site](https://vinipx.github.io/faroxy/).
+
+# Release Notes
+
+## [1.1.0] - 2025-01-19
+
+### Added
+- Project branding with custom logo and favicon
+- Automated setup script (`scripts/setup.sh`) for easy installation
+- Shell integration with `faroxy` command
+- Control script (`scripts/faroxy.sh`) for managing the application
+- Comprehensive documentation for running and managing Faroxy
+
+### Changed
+- Enhanced web interface with modern design
+- Improved navigation bar with logo and consistent styling
+- Streamlined installation process
+- Updated README with quick setup instructions
+
+### Documentation
+- Added detailed running guide
+- Improved contributing guidelines
+- Added troubleshooting section
+- Enhanced documentation site navigation
