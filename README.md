@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/vinipx/faroxy/main/docs/images/logo.png" alt="Faroxy Logo" width="200"/>
+  <img src="https://raw.githubusercontent.com/vinipx/faroxy/main/docs/assets/images/android-chrome-512x512.png" alt="Faroxy Logo" width="200"/>
 </p>
 
 <h1 align="center">Faroxy</h1>
@@ -16,11 +16,11 @@
 [![Last Commit](https://img.shields.io/github/last-commit/vinipx/faroxy?style=flat-square)](https://github.com/vinipx/faroxy/commits/main)
 [![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue?style=flat-square)](https://vinipx.github.io/faroxy/)
 
+---
+
 <div align="center">
 
-![Faroxy Logo](https://raw.githubusercontent.com/vinipx/faroxy/main/docs/images/logo.png)
-
-The Faroxy is a Spring Boot application that functions as an HTTP web proxy server with request/response logging capabilities and a web interface for monitoring traffic.
+A powerful HTTP proxy server built with Spring Boot, featuring real-time traffic monitoring, request/response logging, and an intuitive web interface.
 
 [Getting Started](#quick-start) •
 [Documentation](https://vinipx.github.io/faroxy/) •
