@@ -8,13 +8,13 @@
   A modern HTTP proxy server with real-time traffic monitoring and analysis capabilities
 </p>
 
-[![GitHub Release](https://img.shields.io/github/v/release/vinipx/faroxy?include_prereleases&style=flat-square)](https://github.com/vinipx/faroxy/releases)
-[![License](https://img.shields.io/github/license/vinipx/faroxy?style=flat-square)](LICENSE)
+[![GitHub Release](https://img.shields.io/github/v/release/vinipx/faroxy?style=flat-square&logo=github)](https://github.com/vinipx/faroxy/releases)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![GitHub Issues](https://img.shields.io/github/issues/vinipx/faroxy?style=flat-square)](https://github.com/vinipx/faroxy/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/vinipx/faroxy?style=flat-square)](https://github.com/vinipx/faroxy/pulls)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/vinipx/faroxy/gradle.yml?branch=main&style=flat-square)](https://github.com/vinipx/faroxy/actions)
 [![Last Commit](https://img.shields.io/github/last-commit/vinipx/faroxy?style=flat-square)](https://github.com/vinipx/faroxy/commits/main)
-[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue?style=flat-square)](https://vinipx.github.io/faroxy/)
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue?style=flat-square&logo=github)](https://vinipx.github.io/faroxy/)
 
 ---
 
@@ -44,7 +44,7 @@ A powerful HTTP proxy server built with Spring Boot, featuring real-time traffic
 ## Tech Stack
 
 [![Java](https://img.shields.io/badge/Java-17-orange?style=flat-square&logo=java)](https://www.oracle.com/java/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.1-brightgreen?style=flat-square&logo=spring)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2-green.svg?style=flat-square&logo=spring)](https://spring.io/projects/spring-boot)
 [![Gradle](https://img.shields.io/badge/Gradle-8.4-blue?style=flat-square&logo=gradle)](https://gradle.org/)
 [![H2](https://img.shields.io/badge/H2-Database-darkblue?style=flat-square&logo=h2)](https://www.h2database.com/)
 [![Docker](https://img.shields.io/badge/Docker-Support-blue?style=flat-square&logo=docker)](https://www.docker.com/)
