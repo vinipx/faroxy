@@ -4,80 +4,82 @@ import io.faroxy.model.RequestLog;
 import io.faroxy.model.ResponseLog;
 import io.faroxy.repository.RequestLogRepository;
 import io.faroxy.repository.ResponseLogRepository;
-import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class FaroxyProxyService {
-    private static final Logger logger = LoggerFactory.getLogger(FaroxyProxyService.class);
-    private final WebClient.Builder webClientBuilder;
+    private final WebClient webClient;
     private final RequestLogRepository requestLogRepository;
     private final ResponseLogRepository responseLogRepository;
 
-    public Mono<String> proxyRequest(String url, HttpMethod method, String body, HttpServletRequest request) {
-        logger.info("Proxying request: {} {} with body length: {}", method, url, body.length());
-        RequestLog requestLog = saveRequest(url, method, body, request);
+    public FaroxyProxyService(WebClient.Builder webClientBuilder,
+                             RequestLogRepository requestLogRepository,
+                             ResponseLogRepository responseLogRepository) {
+        this.webClient = webClientBuilder.build();
+        this.requestLogRepository = requestLogRepository;
+        this.responseLogRepository = responseLogRepository;
+    }
 
-        return webClientBuilder.build()
-                .method(method)
+    public Mono<String> proxyRequest(String url, HttpMethod method, String body, HttpServletRequest request) {
+        RequestLog requestLog = saveRequest(url, method, body, request);
+        
+        return webClient.method(method)
                 .uri(url)
-                .bodyValue(body)
-                .retrieve()
-                .bodyToMono(String.class)
-                .doOnSuccess(response -> {
-                    logger.info("Received response for request: {} {}", method, url);
-                    saveResponse(response, requestLog.getId());
-                })
-                .doOnError(error -> logger.error("Error proxying request: {} {}", method, url, error));
+                .bodyValue(body != null ? body : "")
+                .exchangeToMono(response -> {
+                    saveResponse(response.statusCode().value(), Collections.emptyMap().toString(), "", requestLog.getId());
+                    return response.bodyToMono(String.class);
+                });
     }
 
     private RequestLog saveRequest(String url, HttpMethod method, String body, HttpServletRequest request) {
-        logger.debug("Saving request: {} {}", method, url);
         RequestLog requestLog = RequestLog.builder()
                 .method(method.name())
                 .url(url)
-                .body(body)
                 .headers(getHeadersAsString(request))
+                .body(body)
                 .timestamp(LocalDateTime.now())
                 .build();
         return requestLogRepository.save(requestLog);
     }
 
-    private void saveResponse(String response, Long requestId) {
-        logger.debug("Saving response for request ID: {}", requestId);
+    private void saveResponse(int statusCode, String headers, String body, Long requestId) {
         ResponseLog responseLog = ResponseLog.builder()
-                .statusCode(200)
-                .body(response)
+                .statusCode(statusCode)
+                .headers(headers)
+                .body(body)
                 .timestamp(LocalDateTime.now())
                 .requestId(requestId)
                 .build();
         responseLogRepository.save(responseLog);
     }
 
-    private String getHeadersAsString(HttpServletRequest request) {
-        return java.util.Collections.list(request.getHeaderNames()).stream()
-                .map(headerName -> headerName + ": " + request.getHeader(headerName))
-                .collect(Collectors.joining(", "));
+    protected String getHeadersAsString(HttpServletRequest request) {
+        Enumeration<String> headerNames = request.getHeaderNames();
+        if (headerNames == null) {
+            return "";
+        }
+
+        return Collections.list(headerNames).stream()
+                .map(name -> name + ": " + request.getHeader(name))
+                .collect(Collectors.joining("\n"));
     }
 
     public List<RequestLog> getAllRequests() {
-        logger.info("Retrieving all requests");
         return requestLogRepository.findAll();
     }
 
     public List<ResponseLog> getAllResponses() {
-        logger.info("Retrieving all responses");
         return responseLogRepository.findAll();
     }
 }

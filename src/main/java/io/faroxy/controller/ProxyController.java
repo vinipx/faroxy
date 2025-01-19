@@ -1,28 +1,26 @@
 package io.faroxy.controller;
 
 import io.faroxy.service.FaroxyProxyService;
-import lombok.RequiredArgsConstructor;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
 @RequestMapping("/proxy")
-@RequiredArgsConstructor
 public class ProxyController {
-    private final FaroxyProxyService faroxyProxyService;
+    private final FaroxyProxyService proxyService;
 
-    @RequestMapping(value = "/**", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
-    public Mono<ResponseEntity<String>> proxyRequest(
-            @RequestBody(required = false) String body,
+    public ProxyController(FaroxyProxyService proxyService) {
+        this.proxyService = proxyService;
+    }
+
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
+    public Mono<String> proxyRequest(
             HttpServletRequest request,
-            @RequestParam String targetUrl) {
-        
-        HttpMethod method = HttpMethod.valueOf(request.getMethod());
-        return faroxyProxyService.proxyRequest(targetUrl, method, body, request)
-                .map(ResponseEntity::ok);
+            @RequestParam String url,
+            @RequestParam(required = false, defaultValue = "GET") String method,
+            @RequestBody(required = false) String body) {
+        return proxyService.proxyRequest(url, HttpMethod.valueOf(method), body, request);
     }
 }
