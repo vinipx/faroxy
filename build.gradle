@@ -3,6 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.4'
     id 'java'
     id 'application'
+    id 'maven-publish'
 }
 
 group = 'io.faroxy'
@@ -12,6 +13,8 @@ sourceCompatibility = '17'
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+    withJavadocJar()
+    withSourcesJar()
 }
 
 application {
@@ -42,6 +45,47 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.24.2'
     testImplementation 'org.mockito:mockito-core:5.8.0'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.8.0'
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/vinipx/faroxy")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+            pom {
+                name = 'Faroxy'
+                description = 'A modern HTTP proxy server with real-time traffic monitoring and analysis capabilities'
+                url = 'https://github.com/vinipx/faroxy'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'vinipx'
+                        name = 'vinipx'
+                        email = 'your.email@example.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/vinipx/faroxy.git'
+                    developerConnection = 'scm:git:ssh://github.com/vinipx/faroxy.git'
+                    url = 'https://github.com/vinipx/faroxy'
+                }
+            }
+        }
+    }
 }
 
 test {
