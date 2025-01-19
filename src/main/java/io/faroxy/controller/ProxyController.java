@@ -1,5 +1,6 @@
 package io.faroxy.controller;
 
+import io.faroxy.config.ProxyConfiguration;
 import io.faroxy.service.FaroxyProxyService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpMethod;
@@ -10,9 +11,11 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/proxy")
 public class ProxyController {
     private final FaroxyProxyService proxyService;
+    private final ProxyConfiguration proxyConfig;
 
-    public ProxyController(FaroxyProxyService proxyService) {
+    public ProxyController(FaroxyProxyService proxyService, ProxyConfiguration proxyConfig) {
         this.proxyService = proxyService;
+        this.proxyConfig = proxyConfig;
     }
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
