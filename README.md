@@ -110,6 +110,35 @@ GET http://localhost:8080/api/requests
 GET http://localhost:8080/api/responses
 ```
 
+## Configuration
+
+### Port Configuration
+
+Faroxy uses two ports:
+- Server Port: For the application's web interface and API endpoints (default: 8080)
+- Proxy Port: For the actual proxy server functionality (default: 8888)
+
+You can configure these ports in several ways:
+
+1. Environment Variables:
+```bash
+export FAROXY_SERVER_PORT=9090
+export FAROXY_PROXY_PORT=9999
+proxystart
+```
+
+2. System Properties (when running with Gradle):
+```bash
+./gradlew run -Dfaroxy.proxy.port=9999 --args='--server.port=9090'
+```
+
+3. Application Properties:
+Edit `src/main/resources/application.properties`:
+```properties
+server.port=9090
+faroxy.proxy.port=9999
+```
+
 ### H2 Console
 
 Access the H2 database console at:
