@@ -55,6 +55,47 @@ The Faroxy is a Spring Boot application that functions as an HTTP web proxy serv
 - Gradle 7.x or higher
 - Docker (optional)
 
+## Running the Application
+
+Faroxy comes with a convenient control script to manage the application. After cloning the repository:
+
+1. Make the control script executable:
+   ```bash
+   chmod +x scripts/faroxy.sh
+   ```
+
+2. Use the script to manage Faroxy:
+   ```bash
+   # Start the server
+   ./scripts/faroxy.sh start
+
+   # Stop the server
+   ./scripts/faroxy.sh stop
+
+   # Restart the server
+   ./scripts/faroxy.sh restart
+
+   # Check server status
+   ./scripts/faroxy.sh status
+
+   # Show help
+   ./scripts/faroxy.sh help
+   ```
+
+3. Optional: Add an alias to your shell configuration (e.g., `.bashrc` or `.zshrc`):
+   ```bash
+   echo 'alias faroxy="$HOME/path/to/faroxy/scripts/faroxy.sh"' >> ~/.zshrc
+   source ~/.zshrc
+   ```
+
+   Then you can use `faroxy` command from anywhere:
+   ```bash
+   faroxy start
+   faroxy status
+   ```
+
+The application will be available at [http://localhost:8080](http://localhost:8080).
+
 ## Quick Start
 
 ### Running with Gradle

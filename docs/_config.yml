@@ -16,6 +16,14 @@ aux_links:
   "Faroxy on GitHub":
     - "https://github.com/vinipx/faroxy"
 
+# Navigation
+nav:
+  - Home: index.md
+  - Running Faroxy: running.md
+  - Contributing: contributing.md
+  - Docker Guide: docker.md
+  - Troubleshooting: troubleshooting.md
+
 # Enable or disable the site search
 search_enabled: true
 
