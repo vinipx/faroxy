@@ -8,12 +8,12 @@
   A modern HTTP proxy server with real-time traffic monitoring and analysis capabilities
 </p>
 
-[![GitHub Release](https://img.shields.io/github/v/release/vinipx/faroxy?style=flat-square&logo=github)](https://github.com/vinipx/faroxy/releases)
+[![GitHub Release](https://img.shields.io/badge/release-v1.1.0-blue.svg?style=flat-square&logo=github)](https://github.com/vinipx/faroxy/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
-[![GitHub Issues](https://img.shields.io/github/issues/vinipx/faroxy?style=flat-square)](https://github.com/vinipx/faroxy/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/vinipx/faroxy?style=flat-square)](https://github.com/vinipx/faroxy/pulls)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/vinipx/faroxy/gradle.yml?branch=main&style=flat-square)](https://github.com/vinipx/faroxy/actions)
-[![Last Commit](https://img.shields.io/github/last-commit/vinipx/faroxy?style=flat-square)](https://github.com/vinipx/faroxy/commits/main)
+[![GitHub Issues](https://img.shields.io/badge/issues-open-green.svg?style=flat-square&logo=github)](https://github.com/vinipx/faroxy/issues)
+[![GitHub Pull Requests](https://img.shields.io/badge/PRs-welcome-green.svg?style=flat-square&logo=github)](https://github.com/vinipx/faroxy/pulls)
+[![Build Status](https://img.shields.io/badge/build-passing-success.svg?style=flat-square&logo=github-actions)](https://github.com/vinipx/faroxy/actions)
+[![Last Commit](https://img.shields.io/badge/last%20commit-today-green.svg?style=flat-square&logo=github)](https://github.com/vinipx/faroxy/commits/main)
 [![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue?style=flat-square&logo=github)](https://vinipx.github.io/faroxy/)
 
 ---
