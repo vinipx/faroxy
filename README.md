@@ -6,6 +6,7 @@
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/vinipx/faroxy?style=flat-square)](https://github.com/vinipx/faroxy/pulls)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/vinipx/faroxy/gradle.yml?branch=main&style=flat-square)](https://github.com/vinipx/faroxy/actions)
 [![Last Commit](https://img.shields.io/github/last-commit/vinipx/faroxy?style=flat-square)](https://github.com/vinipx/faroxy/commits/main)
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue?style=flat-square)](https://vinipx.github.io/faroxy/)
 
 <div align="center">
 
@@ -14,7 +15,7 @@
 The Faroxy is a Spring Boot application that functions as an HTTP web proxy server with request/response logging capabilities and a web interface for monitoring traffic.
 
 [Getting Started](#quick-start) •
-[Documentation](#documentation) •
+[Documentation](https://vinipx.github.io/faroxy/) •
 [Features](#features) •
 [Contributing](#contributing)
 
@@ -117,6 +118,17 @@ curl http://localhost:8080/api/requests
 # Get all responses
 curl http://localhost:8080/api/responses
 ```
+
+## Documentation
+
+For detailed documentation, tutorials, and API reference, visit our [Documentation Site](https://vinipx.github.io/faroxy/).
+
+The documentation includes:
+- Getting Started Guide
+- API Reference
+- Configuration Options
+- Advanced Features
+- Troubleshooting Guide
 
 ## Configuration
 
