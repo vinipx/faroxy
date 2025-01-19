@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/images/faroxy-logo.png" alt="Faroxy Logo" width="200"/>
+  <img src="https://raw.githubusercontent.com/vinipx/faroxy/main/docs/assets/images/faroxy-logo.png" alt="Faroxy Logo" width="200"/>
 </p>
 
 <h1 align="center">Faroxy</h1>
@@ -18,7 +18,7 @@
 
 <div align="center">
 
-![Faroxy Logo](docs/images/logo.png)
+![Faroxy Logo](https://raw.githubusercontent.com/vinipx/faroxy/main/docs/images/logo.png)
 
 The Faroxy is a Spring Boot application that functions as an HTTP web proxy server with request/response logging capabilities and a web interface for monitoring traffic.
 
