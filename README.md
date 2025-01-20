@@ -190,14 +190,18 @@ curl http://localhost:8080/api/responses
 
 ## Documentation
 
-For detailed documentation, tutorials, and API reference, visit our [Documentation Site](https://vinipx.github.io/faroxy/).
+Faroxy provides comprehensive documentation in multiple formats:
 
-The documentation includes:
-- Getting Started Guide
-- API Reference
-- Configuration Options
-- Advanced Features
-- Troubleshooting Guide
+1. **Live Documentation**: Access the documentation directly from Faroxy at `http://localhost:8080/docs`
+2. **GitHub Pages**: Visit our [GitHub Pages](https://vinipx.github.io/faroxy/) for the latest documentation
+3. **README**: Basic setup and usage information in this README file
+
+The documentation includes detailed information about:
+- Installation and setup
+- Configuration options
+- API reference
+- Web interface features
+- Troubleshooting guide
 
 ## Configuration
 
