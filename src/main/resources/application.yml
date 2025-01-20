@@ -1,0 +1,39 @@
+faroxy:
+  proxy:
+    enabled: true
+    mode: PROXY
+    bind-address: 0.0.0.0
+    port: 8080
+  logging:
+    response:
+      enabled: true
+      body: true
+    request:
+      enabled: true
+      body: true
+    headers: true
+  web:
+    interface:
+      enabled: true
+      refresh-rate: 1000
+  storage:
+    enabled: true
+    max-entries: 1000
+  websocket:
+    enabled: true
+    endpoint: /ws
+    allowed-origins: "*"
+
+spring:
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: "/**"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

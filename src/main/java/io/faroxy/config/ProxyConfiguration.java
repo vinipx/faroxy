@@ -5,6 +5,10 @@ import org.springframework.context.annotation.Configuration;
 
 import lombok.Data;
 
+/**
+ * Configuration properties for the proxy server.
+ * Defines settings for proxy mode, address, port, and logging options.
+ */
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "faroxy.proxy")
