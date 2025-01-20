@@ -1,130 +1,784 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" :class="darkMode ? 'dark' : ''">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faroxy - Web Interface v1.1.1</title>
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <link href="/webjars/bootstrap/5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     <style>
         :root {
-            --faroxy-primary: #ffffff;
-            --faroxy-text: #2c3e50;
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #242424;
+            --bg-hover: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-color: #404040;
+            --accent-color: #ffd700;
+            --hover-border: #fff3b0;
         }
-        
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --bg-hover: #fffbeb;
+            --text-primary: #213547;
+            --text-secondary: #666666;
+            --border-color: #e5e5e5;
+            --accent-color: #ffd700;
+            --hover-border: #ffeeba;
+        }
+
+        body {
+            font-family: 'Fredoka One', cursive;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .json-view, .json-view pre, .detail-content pre {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+        }
+
+        .search-box {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .search-box::placeholder {
+            font-style: italic;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .clear-button {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .clear-button:hover {
+            color: var(--accent-color);
+        }
+
+        .paw-icon {
+            font-size: 1.2rem;
+        }
+
+        .btn {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 300;
+        }
+
+        .copy-button {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 300;
+        }
+
+        .message-item {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 300;
+        }
+
+        .message-header {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 300;
+        }
+
+        .label {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 300;
+        }
+
+        .timestamp {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 300;
+        }
+
+        .method-badge {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 300;
+        }
+
         .navbar {
-            background-color: var(--faroxy-primary) !important;
-            padding: 1rem 1.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: var(--bg-secondary) !important;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
         }
-        
+
+        .navbar-container {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .theme-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
         .navbar-brand {
             display: flex;
             align-items: center;
-            color: var(--faroxy-text) !important;
-            font-weight: 600;
-            font-size: 1.5rem;
+            gap: 0.5rem;
+            white-space: nowrap;
         }
-        
+
         .navbar-brand img {
-            width: 50px;
-            height: 50px;
-            margin-right: 15px;
-            object-fit: contain;
+            width: 32px;
+            height: 32px;
         }
-        
-        .message-container {
-            height: calc(100vh - 150px);
-            overflow-y: auto;
-            padding: 20px;
-            background-color: #f8f9fa;
+
+        .navbar-brand, .nav-link {
+            color: var(--text-primary) !important;
         }
-        
-        .controls {
-            position: sticky;
-            top: 0;
-            background: white;
-            padding: 20px 0;
-            border-bottom: 1px solid #ddd;
-            z-index: 100;
+
+        .card {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease;
         }
-        
-        .traffic-item {
-            margin-bottom: 15px;
-            padding: 15px;
-            border-radius: 5px;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem;
+        }
+
+        .card-header-content {
+            display: grid;
+            grid-template-columns: auto auto 1fr auto auto auto;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .request-id {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            padding: 0.25rem 0.5rem;
+            background-color: var(--bg-primary);
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .request-url {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .status-badge {
+            padding: 0.35rem 0.7rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+
+        .status-2xx { background-color: #198754; color: white; }
+        .status-3xx { background-color: #0dcaf0; color: white; }
+        .status-4xx { background-color: #ffc107; color: black; }
+        .status-5xx { background-color: #dc3545; color: white; }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .section-divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 1.5rem 0;
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .detail-header i {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .detail-group {
+            margin-bottom: 1rem;
+        }
+
+        .detail-label {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .detail-content {
+            background-color: var(--bg-primary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding: 1rem;
+            min-height: fit-content;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 4px 8px;
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.2s ease;
+            z-index: 2;
+        }
+
+        .detail-content:hover .copy-button {
+            opacity: 1;
+        }
+
+        .copy-button:hover {
+            background-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .copy-button i {
+            margin-right: 4px;
+        }
+
+        .detail-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 0.75rem;
+            gap: 0.5rem;
+        }
+
+        .json-view {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .json-view pre {
+            margin: 0;
+            padding: 0.5rem;
+            background-color: transparent !important;
+        }
+
+        .json-view code {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            background: transparent !important;
+        }
+
+        /* Prism Theme Overrides for Dark Mode */
+        [data-theme="dark"] .token.property { color: #9cdcfe; }
+        [data-theme="dark"] .token.string { color: #ce9178; }
+        [data-theme="dark"] .token.number { color: #b5cea8; }
+        [data-theme="dark"] .token.boolean { color: #569cd6; }
+        [data-theme="dark"] .token.null { color: #569cd6; }
+        [data-theme="dark"] .token.punctuation { color: #d4d4d4; }
+        [data-theme="dark"] .token.operator { color: #d4d4d4; }
+
+        .expand-icon {
+            color: var(--text-secondary);
+            transition: transform 0.2s ease;
+        }
+
+        .expand-icon.expanded {
+            transform: rotate(180deg);
+        }
+
+        .method-badge {
+            padding: 0.35rem 0.7rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .method-GET { background-color: #28a745; color: white; }
+        .method-POST { background-color: #007bff; color: white; }
+        .method-PUT { background-color: #ffc107; color: black; }
+        .method-DELETE { background-color: #dc3545; color: white; }
+
+        .search-box {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--text-primary);
+            box-shadow: 0 0 0 2px rgba(var(--text-primary-rgb), 0.1);
+        }
+
+        .btn-outline-secondary {
+            border-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: var(--hover-border);
+            border-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-copy {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-radius: 6px;
+            border: 1px solid var(--text-primary);
+            background-color: transparent;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .btn-copy:hover {
+            background-color: var(--text-primary);
+            color: var(--bg-primary);
+            transform: translateY(-1px);
+        }
+
+        .btn-copy i {
+            font-size: 0.875rem;
+        }
+
+        .btn-copy:active {
+            transform: translateY(0);
+        }
+
+        .copy-btn {
+            float: right;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .theme-switch {
+            margin-left: 1rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .theme-switch:hover {
+            background-color: var(--hover-border);
+        }
+
+        [v-cloak] { display: none; }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .loading-spinner {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .badge {
+            font-size: 0.8rem;
+            padding: 0.35em 0.65em;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .message-item {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .message-item:hover {
+            background-color: var(--bg-hover);
+            border-color: var(--hover-border);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.1);
+        }
+
+        .message-item.expanded {
+            background-color: var(--bg-hover);
+            border-color: var(--accent-color);
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-logo {
+            height: 2.5rem;
+            width: auto;
+        }
+
+        .brand-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .version-text {
+            font-size: 0.8rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-left: 0.5rem;
+            align-self: flex-end;
+            margin-bottom: 0.3rem;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="/images/faroxy-logo.png" alt="Faroxy Logo">
-                Faroxy Monitor
-            </a>
-        </div>
-    </nav>
-    
-    <div class="container-fluid">
-        <div class="controls">
-            <div class="row mb-3">
-                <div class="col-md-8">
-                    <input type="text" id="filterInput" class="form-control" placeholder="Filter messages...">
+    <div id="app" v-cloak>
+        <nav class="navbar navbar-expand-lg">
+            <div class="navbar-container">
+                <div class="brand-container">
+                    <img src="/images/faroxy-logo.png" alt="Faroxy Logo" class="brand-logo">
+                    <a href="/" class="brand-title">
+                        Faroxy
+                    </a>
+                    <span class="version-text">v1.1.1</span>
                 </div>
-                <div class="col-md-4">
-                    <button id="refreshButton" class="btn btn-primary">Refresh</button>
+                <div class="search-container">
+                    <input v-model="filter" 
+                           class="form-control search-box" 
+                           type="text" 
+                           placeholder="Type here to filter messages..."
+                           @input="filterRequests">
+                    <button class="clear-button" @click="clearAll" v-if="messages.length > 0">
+                        <i class="fas fa-paw paw-icon"></i>
+                        Clear
+                    </button>
+                </div>
+                <div class="theme-container">
+                    <button class="theme-switch" @click="toggleTheme" :title="darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+                        <i :class="darkMode ? 'fa fa-sun-o' : 'fa fa-moon-o'"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid mt-4">
+            <div class="row">
+                <div class="col-12">
+                    <div v-if="loading" class="d-flex justify-content-center align-items-center py-5">
+                        <div class="spinner-border loading-spinner" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <div v-else-if="filteredRequests.length === 0" class="empty-state">
+                        <i class="fa fa-inbox"></i>
+                        <p>No requests captured yet. Make some HTTP requests through the proxy to see them here.</p>
+                    </div>
+                    <div v-else v-for="(item, index) in filteredRequests" 
+                         :key="index" 
+                         class="message-item"
+                         @click="toggleRequest(index)" 
+                         style="cursor: pointer">
+                        <div class="card-header-content">
+                            <span class="request-id">#{{ item.request.id }}</span>
+                            <span :class="'method-badge method-' + item.request.method">
+                                {{ item.request.method }}
+                            </span>
+                            <span class="request-url">{{ item.request.url }}</span>
+                            <span v-if="item.response" 
+                                  :class="'status-badge status-' + Math.floor(item.response.status/100) + 'xx'">
+                                {{ item.response.status }}
+                            </span>
+                            <span class="timestamp">
+                                {{ formatTimestamp(item.timestamp) }}
+                            </span>
+                            <i class="fa expand-icon" 
+                               :class="[item.expanded ? 'fa-chevron-up expanded' : 'fa-chevron-down']">
+                            </i>
+                        </div>
+                        <div v-show="item.expanded" class="card-body">
+                            <!-- Request Details -->
+                            <div class="detail-section">
+                                <div class="detail-header">
+                                    <i class="fa fa-arrow-right"></i>
+                                    Request Details
+                                </div>
+                                <div class="detail-group" v-if="item.expanded">
+                                    <div class="detail-label">Headers:</div>
+                                    <div class="detail-content" v-if="item.request.headers">
+                                        <button class="copy-button" @click.stop="copyToClipboard(item.request.headers)">
+                                            <i class="fa fa-copy"></i>Copy
+                                        </button>
+                                        <div class="json-view" v-html="formatJSON(item.request.headers)"></div>
+                                    </div>
+
+                                    <div class="detail-label">Body:</div>
+                                    <div class="detail-content" v-if="item.request.body">
+                                        <button class="copy-button" @click.stop="copyToClipboard(item.request.body)">
+                                            <i class="fa fa-copy"></i>Copy
+                                        </button>
+                                        <div class="json-view" v-html="formatJSON(item.request.body)"></div>
+                                    </div>
+                                </div>
+
+                                <div class="section-divider"></div>
+
+                                <!-- Response Details -->
+                                <div class="detail-section">
+                                    <div class="detail-header">
+                                        <i class="fa fa-arrow-left"></i>
+                                        Response Details
+                                    </div>
+                                    <div class="detail-group" v-if="item.expanded">
+                                        <div class="detail-label">Headers:</div>
+                                        <div class="detail-content" v-if="item.response.headers">
+                                            <button class="copy-button" @click.stop="copyToClipboard(item.response.headers)">
+                                                <i class="fa fa-copy"></i>Copy
+                                            </button>
+                                            <div class="json-view" v-html="formatJSON(item.response.headers)"></div>
+                                        </div>
+
+                                        <div class="detail-label">Body:</div>
+                                        <div class="detail-content" v-if="item.response.body">
+                                            <button class="copy-button" @click.stop="copyToClipboard(item.response.body)">
+                                                <i class="fa fa-copy"></i>Copy
+                                            </button>
+                                            <div class="json-view" v-html="formatJSON(item.response.body)"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div class="message-container" id="messageContainer">
-            <!-- Messages will be dynamically inserted here -->
-        </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="/webjars/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
     <script>
-        function loadMessages(filter = '') {
-            $.get('/api/messages', { filter: filter }, function(messages) {
-                const container = $('#messageContainer');
-                container.empty();
-                
-                messages.forEach(message => {
-                    const messageHtml = `
-                        <div class="message-item">
-                            <strong>Type:</strong> ${message.type}<br>
-                            <strong>Timestamp:</strong> ${new Date(message.timestamp).toLocaleString()}<br>
-                            <strong>Content:</strong><br>
-                            <pre>${message.content}</pre>
-                        </div>
-                    `;
-                    container.append(messageHtml);
-                });
-            });
-        }
+        const app = Vue.createApp({
+            data() {
+                return {
+                    messages: [],
+                    filter: '',
+                    darkMode: true
+                }
+            },
+            computed: {
+                filteredRequests() {
+                    if (!this.filter) return this.messages;
+                    const searchTerm = this.filter.toLowerCase();
+                    return this.messages.filter(item => {
+                        return item.request.url.toLowerCase().includes(searchTerm) ||
+                               item.request.method.toLowerCase().includes(searchTerm);
+                    });
+                }
+            },
+            methods: {
+                formatJSON(obj) {
+                    if (obj === null || obj === undefined) {
+                        return '[NOT AVAILABLE]';
+                    }
+                    
+                    let formatted = '';
+                    if (typeof obj === 'string') {
+                        try {
+                            // Try to parse if it's a JSON string
+                            const parsed = JSON.parse(obj);
+                            formatted = JSON.stringify(parsed, null, 2);
+                        } catch {
+                            // Check if it's HTML
+                            if (obj.trim().startsWith('<') && obj.trim().endsWith('>')) {
+                                return `<pre><code class="language-markup">${this.escapeHtml(obj)}</code></pre>`;
+                            }
+                            // If not JSON or HTML, return as is
+                            return obj || '[NOT AVAILABLE]';
+                        }
+                    } else {
+                        formatted = JSON.stringify(obj, null, 2);
+                    }
+                    
+                    if (!formatted) return '[NOT AVAILABLE]';
+                    return `<pre><code class="language-json">${this.escapeHtml(formatted)}</code></pre>`;
+                },
+                escapeHtml(unsafe) {
+                    return unsafe
+                        .replace(/&/g, "&amp;")
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;")
+                        .replace(/"/g, "&quot;")
+                        .replace(/'/g, "&#039;");
+                },
+                highlightSyntax() {
+                    this.$nextTick(() => {
+                        document.querySelectorAll('pre code').forEach((block) => {
+                            Prism.highlightElement(block);
+                        });
+                    });
+                },
+                toggleRequest(index) {
+                    this.messages[index].expanded = !this.messages[index].expanded;
+                    if (this.messages[index].expanded) {
+                        this.highlightSyntax();
+                    }
+                },
+                formatTimestamp(timestamp) {
+                    if (!timestamp) return '[NOT AVAILABLE]';
+                    return new Date(timestamp).toLocaleString();
+                },
+                copyToClipboard(data) {
+                    let textToCopy = '';
+                    if (typeof data === 'object') {
+                        textToCopy = JSON.stringify(data, null, 2);
+                    } else if (typeof data === 'string') {
+                        try {
+                            // Try to parse and re-stringify if it's JSON
+                            const parsed = JSON.parse(data);
+                            textToCopy = JSON.stringify(parsed, null, 2);
+                        } catch {
+                            // If not JSON, use as is
+                            textToCopy = data;
+                        }
+                    }
+                    
+                    if (!textToCopy || textToCopy === '[NOT AVAILABLE]') {
+                        alert('No content to copy!');
+                        return;
+                    }
 
-        $(document).ready(function() {
-            // Initial load
-            loadMessages();
-
-            // Refresh button click
-            $('#refreshButton').click(function() {
-                loadMessages($('#filterInput').val());
-            });
-
-            // Filter input with debounce
-            let timeout = null;
-            $('#filterInput').on('input', function() {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => {
-                    loadMessages($(this).val());
-                }, 500);
-            });
-        });
+                    navigator.clipboard.writeText(textToCopy)
+                        .then(() => {
+                            const button = event.target.closest('.copy-button');
+                            const originalText = button.innerHTML;
+                            button.innerHTML = '<i class="fa fa-check"></i> Copied!';
+                            setTimeout(() => {
+                                button.innerHTML = originalText;
+                            }, 2000);
+                        })
+                        .catch(err => {
+                            console.error('Failed to copy:', err);
+                            alert('Failed to copy to clipboard');
+                        });
+                },
+                toggleTheme() {
+                    this.darkMode = !this.darkMode;
+                    document.documentElement.setAttribute('data-theme', this.darkMode ? 'dark' : 'light');
+                },
+                clearAll() {
+                    this.messages = [];
+                },
+                connectWebSocket() {
+                    const socket = new SockJS('/ws');
+                    const stompClient = Stomp.over(socket);
+                    stompClient.connect({}, frame => {
+                        console.log('Connected: ' + frame);
+                        stompClient.subscribe('/topic/traffic', message => {
+                            const data = JSON.parse(message.body);
+                            data.expanded = false;
+                            this.messages.unshift(data);
+                        });
+                    });
+                }
+            },
+            mounted() {
+                this.connectWebSocket();
+                this.highlightSyntax();
+                document.documentElement.setAttribute('data-theme', this.darkMode ? 'dark' : 'light');
+            }
+        }).mount('#app');
     </script>
 </body>
 </html>
