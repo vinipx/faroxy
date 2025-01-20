@@ -1,3 +1,11 @@
+# Faroxy v1.1.1 Release Notes
+
+## 🔄 Improvements
+- Enhanced startup experience with cleaner output
+- Added real IP address display for proxy configuration
+- Added direct web interface URL in startup message
+- Reduced logging noise by redirecting build logs to a separate file
+
 # Faroxy v1.1.0 Release Notes
 
 We're excited to announce the first release of Faroxy, a modern HTTP proxy server with real-time traffic monitoring and analysis capabilities!
@@ -122,6 +130,14 @@ Special thanks to all contributors who helped make this release possible!
 For more information, visit our [GitHub repository](https://github.com/vinipx/faroxy) or [documentation site](https://vinipx.github.io/faroxy/).
 
 # Release Notes
+
+## [1.1.1] - 2025-01-20
+
+### Added
+- Enhanced startup experience with cleaner output
+- Added real IP address display for proxy configuration
+- Added direct web interface URL in startup message
+- Reduced logging noise by redirecting build logs to a separate file
 
 ## [1.1.0] - 2025-01-19
 

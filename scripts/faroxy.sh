@@ -1,6 +1,12 @@
 #!/bin/bash
 
 FAROXY_PORT=8080
+# Get the actual IP address
+FAROXY_HOST=$(ipconfig getifaddr en0)
+if [ -z "$FAROXY_HOST" ]; then
+    FAROXY_HOST="localhost"  # Fallback to localhost if IP not found
+fi
+LOG_DIR="logs"
 
 # Function to check if Faroxy is running
 is_running() {
@@ -18,13 +24,29 @@ start() {
         echo "Faroxy is already running on port ${FAROXY_PORT}"
     else
         echo "Starting Faroxy..."
-        ./gradlew bootRun &
-        sleep 5
-        if is_running; then
-            echo "Faroxy started successfully"
-        else
-            echo "Failed to start Faroxy"
-        fi
+        # Create logs directory if it doesn't exist
+        cd "$(dirname "$0")/.." 
+        mkdir -p ${LOG_DIR}
+        
+        # Run gradle in quiet mode and redirect output to log file
+        ./gradlew bootRun -q > ${LOG_DIR}/faroxy.log 2>&1 &
+        
+        # Wait for the service to start
+        for i in {1..30}; do
+            if is_running; then
+                echo "✨ Faroxy started successfully!"
+                echo "🌐 Configure your browser proxy settings to:"
+                echo "   Host: ${FAROXY_HOST}"
+                echo "   Port: ${FAROXY_PORT}"
+                echo ""
+                echo "🔍 Web Interface available at:"
+                echo "   http://${FAROXY_HOST}:${FAROXY_PORT}/ui"
+                return 0
+            fi
+            sleep 1
+        done
+        echo "❌ Failed to start Faroxy. Check logs at ${LOG_DIR}/faroxy.log"
+        return 1
     fi
 }
 
