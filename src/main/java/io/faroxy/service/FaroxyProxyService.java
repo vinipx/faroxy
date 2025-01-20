@@ -5,6 +5,8 @@ import io.faroxy.model.ResponseLog;
 import io.faroxy.repository.RequestLogRepository;
 import io.faroxy.repository.ResponseLogRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -22,6 +24,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class FaroxyProxyService {
+
+    private static final Logger log = LoggerFactory.getLogger(FaroxyProxyService.class);
 
     private final WebClient.Builder webClientBuilder;
     private final RequestLogRepository requestLogRepository;
@@ -54,7 +58,8 @@ public class FaroxyProxyService {
      * @return Response from target server
      */
     public Mono<String> proxyRequest(String url, HttpMethod method, String body, HttpServletRequest request) {
-        // Log request
+        // Log request and start time
+        long startTime = System.currentTimeMillis();
         RequestLog requestLog = new RequestLog();
         requestLog.setUrl(url);
         requestLog.setMethod(method.toString());
@@ -80,23 +85,38 @@ public class FaroxyProxyService {
         }
 
         return requestSpec.retrieve()
-                .bodyToMono(String.class)
-                .map(responseBody -> {
+                .toEntity(String.class)
+                .map(responseEntity -> {
+                    // Calculate response time
+                    long responseTime = System.currentTimeMillis() - startTime;
+                    log.info("Response time: {}ms", responseTime);
+                    log.info("Response status: {}", responseEntity.getStatusCode().value());
+                    log.info("Response headers: {}", responseEntity.getHeaders());
+                    
                     // Log response
                     ResponseLog responseLog = new ResponseLog();
                     responseLog.setRequestId(savedRequest.getId());
-                    responseLog.setBody(responseBody);
+                    responseLog.setStatusCode(responseEntity.getStatusCode().value());
+                    responseLog.setHeaders(responseEntity.getHeaders().toString());
+                    responseLog.setBody(responseEntity.getBody());
                     responseLog.setTimestamp(LocalDateTime.now());
                     ResponseLog savedResponse = responseLogRepository.save(responseLog);
+                    log.info("Saved response: {}", savedResponse);
 
-                    // Send WebSocket message
+                    // Send WebSocket message with response time
                     Map<String, Object> message = new HashMap<>();
                     message.put("request", savedRequest);
                     message.put("response", savedResponse);
                     message.put("timestamp", LocalDateTime.now());
+                    message.put("responseTime", responseTime);
+                    log.info("Sending WebSocket message: {}", message);
                     messagingTemplate.convertAndSend("/topic/traffic", message);
 
-                    return responseBody;
+                    return responseEntity.getBody();
+                })
+                .onErrorResume(e -> {
+                    log.error("Error during request: ", e);
+                    return Mono.just("Error: " + e.getMessage());
                 });
     }
 

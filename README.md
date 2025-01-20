@@ -40,10 +40,21 @@ A powerful HTTP proxy server built with Spring Boot, featuring real-time traffic
 - RESTful APIs to retrieve logged requests and responses
 - Cross-platform support (macOS and Windows)
 - Docker support for easy deployment
+- Real-time response time monitoring with visual indicators
+- HTTP status code display for each request
+- Download request/response details as text files for easy sharing and analysis
+- Dark/Light theme support for better visibility
 
 ## Web Interface
 
-Faroxy comes with a sleek and modern web interface that makes it easy to monitor and analyze HTTP traffic in real-time.
+Faroxy comes with a sleek and modern web interface that makes it easy to monitor and analyze HTTP traffic in real-time. Key features include:
+
+- Real-time traffic monitoring with WebSocket updates
+- Response time display with visual indicators
+- HTTP status code badges
+- Request/response detail expansion
+- Copy and download functionality for request/response data
+- Dark/Light theme toggle for better visibility
 
 <p align="center">
   <img src="docs/images/faroxy-web-interface.png" alt="Faroxy Web Interface" width="800"/>

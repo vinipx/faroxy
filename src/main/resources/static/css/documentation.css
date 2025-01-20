@@ -1,0 +1,232 @@
+:root {
+    --primary-color: #ffd700;
+    --text-color: #213547;
+    --bg-color: #ffffff;
+    --nav-bg: #f5f5f5;
+    --code-bg: #f8f9fa;
+    --border-color: #e5e5e5;
+    --toggle-bg: #e5e7eb;
+    --toggle-circle: #ffffff;
+    --accent-color: #ffd700;
+    --hover-border: #ffeeba;
+}
+
+html.dark {
+    --primary-color: #ffd700;
+    --text-color: #ffffff;
+    --bg-color: #1a1a1a;
+    --nav-bg: #242424;
+    --code-bg: #2a2a2a;
+    --border-color: #404040;
+    --toggle-bg: #404040;
+    --toggle-circle: #ffd700;
+    --accent-color: #ffd700;
+    --hover-border: #fff3b0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background: var(--bg-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.layout-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.nav {
+    width: 250px;
+    background: var(--nav-bg);
+    padding: 2rem;
+    border-right: 1px solid var(--border-color);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    left: 0;
+    top: 0;
+    transition: background-color 0.3s;
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 250px;
+    padding: 2rem;
+    max-width: calc(100% - 250px);
+}
+
+.content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.theme-switch {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 1000;
+    background: var(--nav-bg);
+    padding: 0.5rem;
+    border-radius: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--toggle-bg);
+    transition: .4s;
+    border-radius: 30px;
+    border: 1px solid var(--border-color);
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 3px;
+    background-color: var(--toggle-circle);
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--accent-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(30px);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.logo img {
+    width: 100px;
+    height: auto;
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    margin-bottom: 0.5rem;
+}
+
+.nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    display: block;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-links a:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+}
+
+h1, h2, h3 {
+    color: var(--text-color);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+code {
+    background: var(--code-bg);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+pre {
+    background: var(--code-bg);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+    border: 1px solid var(--border-color);
+}
+
+pre code {
+    border: none;
+    padding: 0;
+}
+
+.version {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+ul {
+    padding-left: 1.5rem;
+}
+
+ul li {
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .layout-container {
+        flex-direction: column;
+    }
+    .nav {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 1rem;
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+        max-width: 100%;
+    }
+    .content {
+        padding: 1rem;
+    }
+    .theme-switch {
+        top: auto;
+        bottom: 1rem;
+    }
+}
