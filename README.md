@@ -2,10 +2,7 @@
   <img src="https://raw.githubusercontent.com/vinipx/faroxy/main/docs/assets/images/android-chrome-512x512.png" alt="Faroxy Logo" width="200"/>
 </p>
 
-<h1 align="center">
-  𝓕𝓪𝓻𝓸𝔁𝔂
-  <sup><em>v1.2.1</em></sup>
-</h1>
+<h1 align="center">Faroxy</h1>
 
 <p align="center">
   A modern HTTP proxy server with real-time traffic monitoring and analysis capabilities
