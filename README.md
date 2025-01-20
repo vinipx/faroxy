@@ -2,7 +2,10 @@
   <img src="https://raw.githubusercontent.com/vinipx/faroxy/main/docs/assets/images/android-chrome-512x512.png" alt="Faroxy Logo" width="200"/>
 </p>
 
-<h1 align="center">Faroxy</h1>
+<h1 align="center">
+  𝓕𝓪𝓻𝓸𝔁𝔂
+  <sup><em>v1.2.1</em></sup>
+</h1>
 
 <p align="center">
   A modern HTTP proxy server with real-time traffic monitoring and analysis capabilities
@@ -36,10 +39,30 @@ A powerful HTTP proxy server built with Spring Boot, featuring real-time traffic
 - Forward HTTP requests and responses (GET, POST, and other methods)
 - Support for form data and custom headers
 - Store intercepted requests and responses in H2 in-memory database
-- Web interface for viewing proxy traffic in real-time
+- Modern and intuitive web interface with real-time traffic monitoring
 - RESTful APIs to retrieve logged requests and responses
 - Cross-platform support (macOS and Windows)
 - Docker support for easy deployment
+
+## Web Interface
+
+Faroxy comes with a sleek and modern web interface that makes it easy to monitor and analyze HTTP traffic in real-time.
+
+<p align="center">
+  <img src="docs/images/faroxy-web-interface.png" alt="Faroxy Web Interface" width="800"/>
+</p>
+
+### Key Features
+
+- **Real-time Updates**: Watch HTTP traffic as it happens
+- **Smart Search**: Filter messages instantly with the search bar
+- **Request Details**: View headers, body, and form data
+- **Response Analysis**: Examine response status, headers, and content
+- **Quick Copy**: One-click copying of values with visual feedback
+- **Dark Mode**: Easy on the eyes with a dark theme
+- **Responsive Design**: Works great on all screen sizes
+
+The web interface is accessible at `http://localhost:8080/ui` after starting Faroxy.
 
 ## Tech Stack
 
