@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Entity class representing a response log entry.
+ * Stores information about HTTP responses received from target servers.
+ */
 @Entity
 @Data
 @Builder
@@ -21,6 +25,7 @@ public class ResponseLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long requestId;
     private Integer statusCode;
     
     @Column(columnDefinition = "TEXT")
@@ -30,5 +35,4 @@ public class ResponseLog {
     private String body;
     
     private LocalDateTime timestamp;
-    private Long requestId;
 }

@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Entity class representing a request log entry.
+ * Stores information about HTTP requests processed by the proxy.
+ */
 @Entity
 @Data
 @Builder
