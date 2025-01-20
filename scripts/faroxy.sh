@@ -60,6 +60,7 @@ stop() {
             echo "Faroxy stopped successfully"
         else
             echo "Failed to stop Faroxy"
+            return 1
         fi
     else
         echo "Faroxy is not running"
@@ -68,10 +69,10 @@ stop() {
 
 # Function to restart Faroxy
 restart() {
-    if is_running; then
-        stop
+    stop
+    if [ $? -eq 0 ]; then
+        start
     fi
-    start
 }
 
 # Function to show status
@@ -86,15 +87,14 @@ status() {
 
 # Function to show help
 show_help() {
-    echo "Faroxy Control Script"
-    echo "Usage: faroxy [command]"
+    echo "Usage: $0 {start|stop|restart|status}"
     echo ""
     echo "Commands:"
     echo "  start    Start Faroxy server"
     echo "  stop     Stop Faroxy server"
     echo "  restart  Restart Faroxy server"
     echo "  status   Show Faroxy server status"
-    echo "  help     Show this help message"
+    echo ""
 }
 
 # Main command handling
@@ -111,12 +111,7 @@ case "$1" in
     status)
         status
         ;;
-    help|--help|-h)
-        show_help
-        ;;
     *)
-        echo "Unknown command: $1"
-        echo "Use 'faroxy help' to see available commands"
+        show_help
         exit 1
-        ;;
 esac
