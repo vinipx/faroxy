@@ -8,7 +8,7 @@
   A modern HTTP proxy server with real-time traffic monitoring and analysis capabilities
 </p>
 
-[![GitHub Release](https://img.shields.io/badge/release-v1.2.2-blue.svg?style=flat-square&logo=github)](https://github.com/vinipx/faroxy/releases)
+[![GitHub Release](https://img.shields.io/badge/release-v1.3.0-blue.svg?style=flat-square&logo=github)](https://github.com/vinipx/faroxy/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![GitHub Issues](https://img.shields.io/badge/issues-open-green.svg?style=flat-square&logo=github)](https://github.com/vinipx/faroxy/issues)
 [![GitHub Pull Requests](https://img.shields.io/badge/PRs-welcome-green.svg?style=flat-square&logo=github)](https://github.com/vinipx/faroxy/pulls)
