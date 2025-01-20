@@ -258,28 +258,33 @@ export SPRING_DATASOURCE_URL=jdbc:h2:mem:customdb
 
 ## Development
 
-### Building the Project
+### Building and Running
 
-```bash
-./gradlew clean build
-```
+1. Build the project:
+   ```bash
+   ./gradlew build
+   ```
 
-### Running Tests
+2. Run the application:
+   ```bash
+   ./gradlew bootRun
+   ```
 
-```bash
-# Run all tests
-./gradlew test
+### Debugging
 
-# Run specific test class
-./gradlew test --tests io.faroxy.integration.ProxyIntegrationTest
-```
+For troubleshooting, use these Gradle logging levels:
 
-### Database Console
+1. Normal development (recommended):
+   ```bash
+   ./gradlew bootRun --info
+   ```
 
-Access the H2 database console at `http://localhost:8080/h2-console`:
-- JDBC URL: `jdbc:h2:mem:testdb`
-- Username: `sa`
-- Password: (empty)
+2. Error investigation:
+   ```bash
+   ./gradlew bootRun --stacktrace
+   ```
+
+> **Note**: Avoid using `--debug` flag as it may expose sensitive information. Use `--info` or `--stacktrace` instead.
 
 ## Troubleshooting
 
