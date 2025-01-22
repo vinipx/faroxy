@@ -5,6 +5,7 @@
 # IDE-specific files
 .vscode/
 .idea/
+.alita/
 *.sublime-project
 *.sublime-workspace
 
