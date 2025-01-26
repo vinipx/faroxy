@@ -8,6 +8,9 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  * REST Controller for handling proxy requests.
  * Manages the forwarding of HTTP requests to target servers.
@@ -43,6 +46,21 @@ public class ProxyController {
             @RequestParam(required = false) MultiValueMap<String, String> formData,
             @RequestBody(required = false) String body) {
         
+        // Validate and normalize the URL
+        String normalizedUrl;
+        try {
+            // Add https:// if no protocol is specified
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                url = "https://" + url;
+            }
+            
+            // Parse and validate the URL
+            URL parsedUrl = new URL(url);
+            normalizedUrl = parsedUrl.toString();
+        } catch (MalformedURLException e) {
+            return Mono.error(new IllegalArgumentException("Invalid URL: " + url));
+        }
+
         String requestBody = body;
         if (formData != null && !formData.isEmpty()) {
             // Convert form data to URL-encoded string
@@ -51,15 +69,15 @@ public class ProxyController {
                 if (!"url".equals(key)) {
                     values.forEach(value -> {
                         if (formBody.length() > 0) {
-                            formBody.append('&');
+                            formBody.append("&");
                         }
-                        formBody.append(key).append('=').append(value);
+                        formBody.append(key).append("=").append(value);
                     });
                 }
             });
             requestBody = formBody.toString();
         }
 
-        return proxyService.proxyRequest(url, HttpMethod.valueOf(request.getMethod()), requestBody, request);
+        return proxyService.proxyRequest(normalizedUrl, HttpMethod.valueOf(request.getMethod()), requestBody, request);
     }
 }

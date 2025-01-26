@@ -44,6 +44,11 @@ A powerful HTTP proxy server built with Spring Boot, featuring real-time traffic
 - HTTP status code display for each request
 - Download request/response details as text files for easy sharing and analysis
 - Dark/Light theme support for better visibility
+- Robust error handling with detailed error messages
+- Visual error indicators in the web interface
+- Connection pool management for improved performance
+- Automatic retry mechanism for failed requests
+- URL validation and normalization
 
 ## Web Interface
 
@@ -51,10 +56,12 @@ Faroxy comes with a sleek and modern web interface that makes it easy to monitor
 
 - Real-time traffic monitoring with WebSocket updates
 - Response time display with visual indicators
-- HTTP status code badges
+- HTTP status code badges with error state visualization
 - Request/response detail expansion
 - Copy and download functionality for request/response data
 - Dark/Light theme toggle for better visibility
+- Error message display with detailed information
+- Connection status monitoring
 
 <p align="center">
   <img src="docs/images/faroxy-web-interface.png" alt="Faroxy Web Interface" width="800"/>
@@ -69,8 +76,38 @@ Faroxy comes with a sleek and modern web interface that makes it easy to monitor
 - **Quick Copy**: One-click copying of values with visual feedback
 - **Dark Mode**: Easy on the eyes with a dark theme
 - **Responsive Design**: Works great on all screen sizes
+- **Error Handling**: Clear visualization of errors with detailed messages
+- **Connection Management**: Automatic handling of connection issues
+- **URL Validation**: Automatic URL validation and normalization
 
 The web interface is accessible at `http://localhost:8080/ui` after starting Faroxy.
+
+## Error Handling
+
+Faroxy provides comprehensive error handling for various scenarios:
+
+### Connection Issues
+- Connection refused errors
+- Premature connection closure
+- Connection timeout
+- SSL/TLS errors
+
+### Request/Response Issues
+- Invalid URL format
+- Malformed requests
+- Server errors (4xx, 5xx)
+- Response timeout
+
+### WebSocket Issues
+- Connection drops
+- Reconnection attempts
+- Heartbeat monitoring
+
+All errors are:
+1. Logged with detailed information
+2. Displayed in the web interface with clear indicators
+3. Stored in the database for analysis
+4. Available through the API
 
 ## Tech Stack
 

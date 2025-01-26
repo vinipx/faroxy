@@ -118,6 +118,10 @@
             transition: all 0.2s ease;
         }
 
+        .message-item.error {
+            border-left: 4px solid #dc3545;
+        }
+
         .message-header {
             font-family: 'Fredoka One', cursive;
             font-weight: 300;
@@ -330,17 +334,22 @@
         }
 
         .status-badge {
-            padding: 0.35rem 0.7rem;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            padding: 0.15rem 0.35rem;
+            border-radius: 0.2rem;
+            font-weight: 500;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
         }
 
-        .status-2xx { background-color: #198754; color: white; }
-        .status-3xx { background-color: #0dcaf0; color: white; }
-        .status-4xx { background-color: #ffc107; color: black; }
-        .status-5xx { background-color: #dc3545; color: white; }
+        .status-2xx {
+            background-color: #198754;
+            color: white;
+        }
+
+        .status-4xx, .status-5xx {
+            background-color: #dc3545;
+            color: white;
+        }
 
         .card-body {
             padding: 1.5rem;
@@ -572,6 +581,12 @@
             background: transparent !important;
         }
 
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
         /* Prism Theme Overrides for Dark Mode */
         [data-theme="dark"] .token.property { color: #9cdcfe; }
         [data-theme="dark"] .token.string { color: #ce9178; }
@@ -721,6 +736,7 @@
                     <div v-else v-for="(item, index) in filteredRequests" 
                          :key="index" 
                          class="message-item"
+                         :class="{ 'error': item.error || (item.response && item.response.status >= 400) }"
                          @click="toggleRequest(index)" 
                          style="cursor: pointer">
                         <div class="card-header-content">
@@ -740,9 +756,9 @@
                             <span class="timestamp">
                                 {{ formatTimestamp(item.timestamp) }}
                             </span>
-                            <i class="fas" 
-                               :class="[item.expanded ? 'fa-chevron-up expanded' : 'fa-chevron-down']">
-                            </i>
+                        </div>
+                        <div v-if="item.error" class="error-message px-3 pb-2">
+                            {{ item.response.body }}
                         </div>
                         <div v-show="item.expanded" class="card-body">
                             <!-- Request Details -->
@@ -814,21 +830,21 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="/webjars/jquery/3.7.1/jquery.min.js"></script>
     <script src="/webjars/bootstrap/5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="/webjars/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/2.3.4/stomp.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
     <script>
-        const { createApp } = Vue;
-        createApp({
+        Vue.createApp({
             data() {
                 return {
                     messages: [],
                     filter: '',
                     loading: true,
                     darkMode: localStorage.getItem('darkMode') !== 'false',
-                    stompClient: null
+                    stompClient: null,
+                    connected: false
                 }
             },
             computed: {
@@ -961,55 +977,71 @@
                 connectWebSocket() {
                     const socket = new SockJS('/ws');
                     this.stompClient = Stomp.over(socket);
+                    this.stompClient.debug = null; // Disable debug messages
                     
-                    this.stompClient.connect({}, (frame) => {
+                    const connectCallback = (frame) => {
                         console.log('Connected to WebSocket:', frame);
+                        this.connected = true;
                         this.loading = false;
                         
                         this.stompClient.subscribe('/topic/traffic', (message) => {
-                            const data = JSON.parse(message.body);
-                            console.log('Raw WebSocket message:', message.body);
-                            console.log('Parsed data:', data);
-                            const request = data.request;
-                            const response = data.response;
-                            console.log('Response object:', response);
-                            console.log('Response status:', response.statusCode);
-                            console.log('Response time:', data.responseTime);
-                            
-                            const messageItem = {
-                                method: request.method,
-                                url: request.url,
-                                headers: request.headers,
-                                body: request.body,
-                                timestamp: request.timestamp,
-                                responseTime: data.responseTime,
-                                response: {
-                                    status: response.statusCode,
-                                    headers: response.headers,
-                                    body: response.body
-                                },
-                                expanded: false
-                            };
-                            
-                            console.log('Final message item:', messageItem);
-                            
-                            this.$nextTick(() => {
-                                this.messages.unshift(messageItem);
-                                console.log('Current messages:', this.messages);
-                                if (this.messages.length > 100) {
-                                    this.messages.pop();
-                                }
-                            });
+                            try {
+                                const data = JSON.parse(message.body);
+                                console.log('Received WebSocket message:', data);
+                                
+                                const request = data.request;
+                                const response = data.response;
+                                
+                                const messageItem = {
+                                    method: request.method,
+                                    url: request.url,
+                                    headers: request.headers,
+                                    body: request.body,
+                                    timestamp: request.timestamp,
+                                    responseTime: data.responseTime,
+                                    error: data.error || false,
+                                    response: {
+                                        status: response.statusCode,
+                                        headers: response.headers,
+                                        body: response.body
+                                    },
+                                    expanded: false
+                                };
+                                
+                                console.log('Final message item:', messageItem);
+                                
+                                this.$nextTick(() => {
+                                    this.messages.unshift(messageItem);
+                                    console.log('Current messages:', this.messages);
+                                    if (this.messages.length > 100) {
+                                        this.messages.pop();
+                                    }
+                                });
+                            } catch (error) {
+                                console.error('Error processing WebSocket message:', error);
+                            }
                         });
-                    }, (error) => {
-                        console.error('STOMP error:', error);
+                    };
+                    
+                    const errorCallback = (error) => {
+                        console.error('WebSocket connection error:', error);
+                        this.connected = false;
                         this.loading = false;
-                    });
+                        // Try to reconnect after 5 seconds
+                        setTimeout(() => {
+                            if (!this.connected) {
+                                console.log('Attempting to reconnect...');
+                                this.connectWebSocket();
+                            }
+                        }, 5000);
+                    };
+                    
+                    this.stompClient.connect({}, connectCallback, errorCallback);
                 }
             },
             mounted() {
                 this.connectWebSocket();
-                document.documentElement.setAttribute('data-theme', this.darkMode ? 'dark' : 'light');
+                this.highlightSyntax();
             }
         }).mount('#app');
     </script>
